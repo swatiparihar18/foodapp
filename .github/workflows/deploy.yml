@@ -9,32 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: frontend
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      - run: npm install
 
-      - name: Install Dependencies
-        run: |
-          cd frontend
-          npm install
+      - run: npm run build
 
-      - name: Build Project
-        run: |
-          cd frontend
-          npm run build
-
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --delete
+      - run: aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} --delete
         env:
-          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-south-1_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "frontend/build"
