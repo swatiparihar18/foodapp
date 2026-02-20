@@ -1,15 +1,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config(); 
 
-const uri = process.env.MONGODB_URI
-
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+const uri ="mongodb+srv://abhinavsharma:abhinav99@cluster0.bhisjbw.mongodb.net/blogify?retryWrites=true&w=majority";
 
 const connectDB = async () => {
   try {
