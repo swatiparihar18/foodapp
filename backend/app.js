@@ -13,7 +13,7 @@ const allowedOrigins = [
   "http://foodapp99.s3-website.ap-south-1.amazonaws.com"
 ];
 
-const cors = require("cors");
+
 
 app.use(cors({
   origin: "*",
