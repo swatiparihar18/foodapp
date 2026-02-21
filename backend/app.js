@@ -13,20 +13,14 @@ const allowedOrigins = [
   "http://foodapp99.s3-website.ap-south-1.amazonaws.com"
 ];
 
+const cors = require("cors");
+
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
 }));
 
-app.options("*", cors()); // handle preflight
-
+app.options("*", cors());
 
 app.use(express.json());
 
